@@ -8,14 +8,12 @@ const Blog = require('../models/BlogSchema')
 //       })
 //   }
 
-exports.postBlog = (request, response) => {
-    const blog = new Blog(request.body)
-    blog
-      .save()
-      .then(result => {
-        response.status(201).json(result)
-      })
-  }
+exports.postBlog = async (request, response) => {
+  console.log(request.body);
+  const blog = request.body;
+  await Blog.insertMany(blog);
+  response.send(blog);
+};
 //   const Blog = require('../models/BlogSchema')
 
 

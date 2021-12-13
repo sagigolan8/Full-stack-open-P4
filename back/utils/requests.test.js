@@ -16,6 +16,30 @@ test('DB is defined and got property id', async () => {
    expect(result.body[0].id).toBeDefined()
 })
 
+test("verify that a blog added to DB", async () => {
+    const blogs1 = await api
+      .get("/api/blogs")
+  
+    await api.post("/api/blogs").send({
+      "title": "test",
+      "author": "test",
+      "url": "test",
+      "likes": 0,
+    }).expect(200)
+  
+    const blogs2 = await api
+      .get("/api/blogs")
+  
+    expect(blogs1.body.length + 1).toBe(blogs2.body.length);
+  })
+  
+
+test('DB is defined and got property id', async () => {
+    const result = await api
+   .get('/api/blogs')
+   expect(result.body[0].id).toBeDefined()
+})
+
 
 
 afterAll(() => {
