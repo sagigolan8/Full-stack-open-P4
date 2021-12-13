@@ -34,10 +34,16 @@ test("verify that a blog added to DB", async () => {
   })
   
 
-test('DB is defined and got property id', async () => {
+test('If the likes property is missing from the request, it will default to the value 0', async () => {
     const result = await api
-   .get('/api/blogs')
-   expect(result.body[0].id).toBeDefined()
+   .post('/api/blogs')
+   .send(
+    {
+        "title": "Mystery egg1",
+        "author": "antonymous",
+        "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html"
+    })
+   expect(result.body.likes).toBe(0)
 })
 
 
