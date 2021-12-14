@@ -2,12 +2,32 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../server')
 const { getBlogs } = require('../controllers/blogs')
+const { expect, beforeAll, beforeEach } = require('@jest/globals')
+const { response } = require('express')
 const api = supertest(app)
 
 test('notes are returned as json', async () => {
      const result = await api
     .get('/api/blogs')
-    expect(result.body.length).toBe(2)
+    expect(result.body.length).toBe(1)
+})
+
+
+test("verify that a blog added to DB", async () => {
+    const blogs1 = await api
+    .get("/api/blogs")
+    
+    await api.post("/api/blogs").send({
+        "title": "test",
+        "author": "test",
+        "url": "test",
+        "likes": 0,
+    }).expect(200)
+
+    const blogs2 = await api
+    .get("/api/blogs")
+    
+    expect(blogs1.body.length + 1).toBe(blogs2.body.length);
 })
 
 test('DB is defined and got property id', async () => {
@@ -15,24 +35,6 @@ test('DB is defined and got property id', async () => {
    .get('/api/blogs')
    expect(result.body[0].id).toBeDefined()
 })
-
-test("verify that a blog added to DB", async () => {
-    const blogs1 = await api
-      .get("/api/blogs")
-  
-    await api.post("/api/blogs").send({
-      "title": "test",
-      "author": "test",
-      "url": "test",
-      "likes": 0,
-    }).expect(200)
-  
-    const blogs2 = await api
-      .get("/api/blogs")
-  
-    expect(blogs1.body.length + 1).toBe(blogs2.body.length);
-  })
-  
 
 test('If the likes property is missing from the request, it will default to the value 0', async () => {
     const result = await api
@@ -46,8 +48,53 @@ test('If the likes property is missing from the request, it will default to the 
    expect(result.body.likes).toBe(0)
 })
 
+test('If title and url properties are missing from the request data,the responds status code 400 Bad Request', async () => {
+    await api
+   .post('/api/blogs')
+   .send(
+    {
+        "author": "antonymous",
+        "likes":5
+    }).expect(400)
+})
+
+test("verify that a chosen blog deleted from DB", async () => {
+  const blogs1 = await api.get("/api/blogs");
+
+  await api.delete("/api/blogs/61b85dd7bd63a1c493029494");
+
+  const blogs2 = await api.get("/api/blogs");
+
+  expect(blogs1.body.length).toBe(blogs2.body.length);
+});
+
+test("should verify that a chosen blog updated in DB", async () => {
+  const blogs1 = await api.get("/api/blogs");
+  const firstBlog = blogs1.body[0] 
+//   console.log(blogs.body[0].id);
+  await api
+  .put('/api/blogs')
+  .send(
+    {
+        _id: firstBlog.id,
+        likes: 821
+    }
+  )
+  .expect(200)
+  const blogs2 = await api.get("/api/blogs");
+  const updatedBlog = blogs2.body[0]
+  expect(updatedBlog.likes).toBe(821);
+});
 
 
-afterAll(() => {
+afterAll(async() => {
+    await api.delete('/api/blogsAll')
+    await api.post("/api/blogs").send({
+        "title": "sagi",
+        "author": "golan",
+        "url": "test",
+        "likes": 1000,
+      })
   mongoose.connection.close()
+  app.killServer()
 })
