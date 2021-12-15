@@ -3,12 +3,12 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose')
 const cors = require("cors");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
 const blogsRouter = require('./routers/blogsRouter') 
 const usersRouter = require('./routers/usersRouter') 
 const loginRouter = require('./routers/loginRouter') 
-const { userExtractor } = require('./middleware/users')
-const PORT = 3003
 
 mongoose.connect(process.env.DB_URI, {
     useNewUrlParser: true,
@@ -24,13 +24,17 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use('/api/blogs', userExtractor ,blogsRouter)
-app.use('/api/users', usersRouter)
-app.use('/api/login', loginRouter)
+app.use('/api/blogs',blogsRouter)
+app.use('/api/users',usersRouter)
+app.use('/api/login',loginRouter)
 
-
- app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+const PORT = 3000
+const listener = app.listen(PORT, () => {
+  console.log(`Server is listening on http://localhost:${PORT}`)
 })
+
+app.killServer = ()=>{
+  listener.close()
+}
 
 module.exports = app

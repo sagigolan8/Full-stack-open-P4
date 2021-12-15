@@ -92,7 +92,6 @@ describe('total likes', () => {
           }
       ]
       test('shuold returns the author who has the largest amount of blogs ',()=>{
-          console.log("hiiiii",listBlogs);
         const result = listHelper.mostBlogs(listBlogs)
         expect(result).toEqual(
             {

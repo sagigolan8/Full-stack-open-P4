@@ -1,15 +1,13 @@
 const mongoose = require('mongoose')
+const Blog = require('../models/BlogSchema')
 const supertest = require('supertest')
 const app = require('../server')
-const { getBlogs } = require('../controllers/blogs')
-const { expect, beforeAll, beforeEach } = require('@jest/globals')
-const { response } = require('express')
 const api = supertest(app)
 
 test('notes are returned as json', async () => {
      const result = await api
     .get('/api/blogs')
-    expect(result.body.length).toBe(1)
+    expect(result.body.length).toBe(0)
 })
 
 
@@ -86,15 +84,8 @@ test("should verify that a chosen blog updated in DB", async () => {
   expect(updatedBlog.likes).toBe(821);
 });
 
-
-afterAll(async() => {
-    await api.delete('/api/blogsAll')
-    await api.post("/api/blogs").send({
-        "title": "sagi",
-        "author": "golan",
-        "url": "test",
-        "likes": 1000,
-      })
+afterAll( async() => {
+  await Blog.deleteMany()
   mongoose.connection.close()
-  app.killServer()
+// app.killServer()
 })

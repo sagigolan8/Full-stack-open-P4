@@ -24,11 +24,12 @@ exports.updateBlog = async (request, response) => {
   }
 
 exports.deleteBlog = async (request, response) => {
+  try {
     const id = request.params.id
-    const res = await Blog.deleteOne({_id:id})
-    response.json(res)
+     await Blog.deleteOne({_id:id})
+    response.send('deleted successfully')
+  } catch (error) {
+    return response.status(422).send('wrong id, this blog does\'nt exist')
   }
-exports.deleteBlogs = async (request,response)=>{ //for delete all
-  await Blog.deleteMany()
-  response.send('nice')
-}
+  }
+
