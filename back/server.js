@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 const blogsRouter = require('./routers/blogsRouter') 
 const usersRouter = require('./routers/usersRouter') 
 const loginRouter = require('./routers/loginRouter') 
-const { userExtractor } = require('./middleware/users')
+const { userExtractor } = require('./middleware/usersAuth')
 const PORT = 3003
 
 mongoose.connect(process.env.DB_URI, {

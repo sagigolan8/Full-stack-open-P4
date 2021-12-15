@@ -21,7 +21,7 @@ exports.userValidate = (req,res,next)=>{
 exports.userExtractor = (req, res,next) => {
     let authToken = req.headers.authorization
     if (authToken === undefined){
-        return res.status(400).send("cannot find user token")
+        return res.status(401).json({message:"Unauthorized"})
     }
     authToken = authToken.split(" ")[1]
     jwt.verify(authToken, process.env.SECRET,(err,decoded)=>{
