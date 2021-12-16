@@ -2,26 +2,41 @@ POST http://localhost:3003/api/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "password": "21e3qwdqwd2", 
-    "username": "baadqw2"
+    "password": "21e3v602r9ejdm", 
+    "username": "ilena8"
+}
+
+###
+POST http://localhost:3003/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "password": "21e3v602r9ejdm", 
+    "name":"something good",
+    "username": "ilena8"
 }
 
 ###
 
 POST http://localhost:3003/api/blogs HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhYWRxdzIiLCJpZCI6IjYxYjllZGIyZGE4M2IzNWFkNDRmZjkwYiIsImlhdCI6MTYzOTU4NTQ4Mn0.IRCq872I4IUmlVNGQhKYPCCic0w2MFnO4aaYo-IdOf4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlsZW5hOCIsIm5hbWUiOiJzb21ldGhpbmcgZ29vZCIsImlkIjoiNjFiYTdkMjRiNzk2ZmU3ZTE2YWNiODNkIiwiaWF0IjoxNjM5NjExNjk0fQ.TSiEfI5KevwVdTjfPMYydp-k_pvTa4EojO0VkSSjz6c
 
 {
-    "title": "pirhit",
-    "author": "shimony",
-    "url": "testing u",
-    "likes": 22
+    "title": "LastPost",
+    "author": "yelana4",
+    "url": "abcdef u 4",
+    "likes": 572
 }
 ###
-
-DELETE  http://localhost:3003/api/blogs/213 HTTP/1.1
+GET  http://localhost:3003/api/users HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhYWRxdzIiLCJpZCI6IjYxYjllZGIyZGE4M2IzNWFkNDRmZjkwYiIsImlhdCI6MTYzOTU4NTQ4Mn0.IRCq872I4IUmlVNGQhKYPCCic0w2MFnO4aaYo-IdOf4
+
+
+###
+
+DELETE  http://localhost:3003/api/blogs/123 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlsZW5hOCIsIm5hbWUiOiJzb21ldGhpbmcgZ29vZCIsImlkIjoiNjFiYTdkMjRiNzk2ZmU3ZTE2YWNiODNkIiwiaWF0IjoxNjM5NjExNjk0fQ.TSiEfI5KevwVdTjfPMYydp-k_pvTa4EojO0VkSSjz6c
 
 

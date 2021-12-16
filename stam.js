@@ -1,1 +1,14 @@
-console.log([1,2,3,1].filter((a)=>a!==1).length);
+let obj =
+{
+    blogs:[
+        {
+            url:'21eqwdqasd',
+            title:'hello'
+        }
+    ]
+}
+let obj2 = {
+    name:'sagi',
+    job:'pc'
+}
+console.log({obj2,...obj});

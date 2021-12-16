@@ -12,8 +12,10 @@ const UserSchema = new mongoose.Schema({
     name: String,
     blogs: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Blog",
+        title: String,
+        author: String,
+        url: String,
+        likes: Number,
       }
     ],
   

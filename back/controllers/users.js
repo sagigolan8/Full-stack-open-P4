@@ -9,7 +9,8 @@ try {
   const user = await User.create({
       username: username,
       name: name,
-      password:passwordHash,
+      password: passwordHash,
+      blogs: []
     })
     res.json(user)
 } catch (error) {
@@ -19,7 +20,7 @@ try {
 
 }
 
-exports.getUser = async (request, response) => {
-  const blogs = await Blog.find({})
-  response.json(blogs)
+exports.getUsers = async (req, res) => {
+  const users = await User.find()
+  res.json(users)
 }
