@@ -1,14 +1,1 @@
-let obj =
-{
-    blogs:[
-        {
-            url:'21eqwdqasd',
-            title:'hello'
-        }
-    ]
-}
-let obj2 = {
-    name:'sagi',
-    job:'pc'
-}
-console.log({obj2,...obj});
+console.log([1,43543,223,-34234,4576,22].sort((a,b)=>a-b).reverse());

@@ -2,7 +2,7 @@ const Blog = require('../models/BlogSchema')
 const User = require('../models/UserSchema')
 
 exports.postBlog = async (request, response) => {
-  const user = request.user
+  const user = request.user 
   let likes = 0;
   if (request.body.likes) likes = request.body.likes
   let blog = { likes, ...request.body };
@@ -12,8 +12,8 @@ exports.postBlog = async (request, response) => {
   return
   }
   const newBlog = await Blog.create(blog);
-  await User.findOneAndUpdate({_id:user.id},{$push:{ blogs: {_id: newBlog.id,...blog} }})
-  response.send(blog);
+  await User.findOneAndUpdate({_id:user.id},{ $push:{ blogs: {_id: newBlog.id,...blog} }})
+  response.json({blog ,message:`blog posted - "${blog.title}" by ${user.username}!`});
 };
 
 exports.getBlogs = async (request, response) => {
@@ -22,6 +22,7 @@ exports.getBlogs = async (request, response) => {
   }
 
 exports.updateBlog = async (request, response) => {
+    console.log(request.body);
     const {likes,_id} = request.body
     await Blog.findOneAndUpdate({_id},{likes})
     response.send('updated successfully')
@@ -30,6 +31,7 @@ exports.updateBlog = async (request, response) => {
 exports.deleteBlog = async (request, response) => {
   try {
     const id = request.params.id
+    console.log(id);
      await Blog.deleteOne({_id:id})
     response.send('deleted successfully')
   } catch (error) {

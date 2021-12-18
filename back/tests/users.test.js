@@ -24,5 +24,4 @@ test('should check that invalid users are not created and returns suitable statu
 afterAll(async() => {
     await User.deleteMany()
   mongoose.connection.close()
-  // app.killServer()
 })

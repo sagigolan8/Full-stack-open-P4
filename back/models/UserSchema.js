@@ -9,7 +9,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     },
-    name: String,
+    name:{
+      type: String,
+      default: 'anonymous'
+     }
+    ,
     blogs: [
       {
         title: String,

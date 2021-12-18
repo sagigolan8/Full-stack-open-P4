@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/UserSchema')
-const Blog = require('../models/BlogSchema')
 
 exports.createUser = async (req,res)=>{
 try {
@@ -12,7 +11,7 @@ try {
       password: passwordHash,
       blogs: []
     })
-    res.json(user)
+    res.json(user) 
 } catch (error) {
     res.status(409).send('user already exist')
 }

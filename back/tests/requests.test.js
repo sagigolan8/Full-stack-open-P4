@@ -6,12 +6,12 @@ const app = require('../server')
 const api = supertest(app)
 
 const getValidToken = async ()=>{ 
-    await api.post('/api/users').send({username:'admin',password:'test',name:'yuval'})
     const res = await api.post('/api/login').send({username:'admin',password:'test'})
     return res.body.token
 } 
 
 test('should verify the length in DB as we expected', async () => {
+    await api.post('/api/users').send({username:'admin',password:'test',name:'Sagi'})
      const token = await getValidToken()
      const result = await api
     .get('/api/blogs').set('Authorization', `Bearer ${token}`) 
@@ -54,7 +54,7 @@ test('If the likes property is missing from the request, it will default to the 
         "author": "antonymous",
         "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html"
     })
-   expect(result.body.likes).toBe(0)
+   expect(result.body.blog.likes).toBe(0)
 })
 
 test('If title and url properties are missing from the request data,the responds status code 400 Bad Request', async () => {
